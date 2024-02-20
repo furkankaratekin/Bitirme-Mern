@@ -8,6 +8,8 @@ const webSitesSchema = new mongoose.Schema(
     uzun_link: { type: String, required: true, unique: true },
     ana_baslik: { type: String, required: true, unique: false },
     uzun_aciklama: { type: String, required: true, unique: false },
+    icerik: { type: String, required: true, unique: false },
+    icerik_image: [{ type: Array, required: true, unique: false }],
     meta_etiketleri: [{ type: Array, required: true, unique: false }],
   },
   { timestamps: true }
