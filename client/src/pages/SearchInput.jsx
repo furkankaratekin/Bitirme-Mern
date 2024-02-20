@@ -3,11 +3,21 @@ import { useNavigate } from "react-router-dom";
 
 const SearchInput = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
-    navigate(`/websites?search=${encodeURIComponent(searchTerm)}`);
+    if (searchTerm.trim() === "") {
+      setErrorMessage("Lütfen bir değer giriniz.");
+    } else {
+      navigate(`/websites?search=${encodeURIComponent(searchTerm)}`);
+    }
+  };
+
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
+    setErrorMessage(""); // Reset error message when user starts typing
   };
 
   return (
@@ -15,10 +25,11 @@ const SearchInput = () => {
       <input
         type="text"
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={handleChange}
         placeholder="Enter URL..."
       />
       <button type="submit">Search</button>
+      {errorMessage && <p>{errorMessage}</p>}
     </form>
   );
 };

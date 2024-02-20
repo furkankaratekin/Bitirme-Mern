@@ -10,6 +10,7 @@ const WebsitesList = () => {
   const [websites, setWebsites] = useState([]);
   const [displayWebsites, setDisplayWebsites] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -57,12 +58,17 @@ const WebsitesList = () => {
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
+    setErrorMessage(""); // Reset error message when user starts typing
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate(`?search=${encodeURIComponent(inputValue)}`);
-    filterWebsites(websites, inputValue);
+    if (inputValue.trim() === "") {
+      setErrorMessage("Lütfen bir veri girin.");
+    } else {
+      navigate(`?search=${encodeURIComponent(inputValue)}`);
+      filterWebsites(websites, inputValue);
+    }
   };
 
   return (
@@ -77,6 +83,7 @@ const WebsitesList = () => {
         />
         <button type="submit">Search</button>
       </form>
+      {errorMessage && <p>{errorMessage}</p>}
       <ul>
         {displayWebsites.map((website) => (
           <li key={website.id}>
