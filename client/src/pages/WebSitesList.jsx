@@ -36,13 +36,21 @@ const WebsitesList = () => {
   }, []);
 
   const filterWebsites = (fetchedWebsites, search) => {
+    const searchLower = search.toLowerCase();
     const filtered = fetchedWebsites
-      .filter(
-        (website) =>
-          website.kısa_link.toLowerCase().includes(search.toLowerCase()) ||
-          website.uzun_link.toLowerCase().includes(search.toLowerCase())
-      )
-      .slice(0, 6); // Keep only the first 6 results
+      .filter((website) => {
+        // Check if URLs contain the search query
+        const matchesURL =
+          website.kısa_link.toLowerCase().includes(searchLower) ||
+          website.uzun_link.toLowerCase().includes(searchLower);
+        // Check if any meta tag contains the search query
+        const matchesMetaTags = website.meta_etiketleri.some((tag) =>
+          String(tag).toLowerCase().includes(searchLower)
+        );
+
+        return matchesURL || matchesMetaTags;
+      })
+      .slice(0, 6); // Keep only the first 6 results for display
 
     setDisplayWebsites(filtered);
   };
