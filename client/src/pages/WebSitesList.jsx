@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -88,18 +88,16 @@ const WebsitesList = () => {
         {displayWebsites.map((website) => (
           <li key={website.id}>
             <img src={website.img_logo} alt={`${website.ana_baslik} logo`} />
-            <a
-              href={website.uzun_link}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link to={`/websites/${website.id}`}>
+              {" "}
+              {/* Update this line */}
               {website.ana_baslik}
-            </a>
+            </Link>
             <p>Short URL: {website.kısa_link}</p>
             <p>Long URL: {website.uzun_link}</p>
             <p>Baslik: {website.ana_baslik}</p>
             <p>Aciklama: {website.uzun_aciklama}</p>
-            <p>Meta Etiketleri: {website.meta_etiketleri}</p>
+            <p>Meta Etiketleri: {website.meta_etiketleri.join(", ")}</p>
           </li>
         ))}
       </ul>
