@@ -72,35 +72,55 @@ const WebsitesList = () => {
   };
 
   return (
-    <div>
-      <h2>Websites List</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder="Enter URL..."
-        />
-        <button type="submit">Search</button>
-      </form>
-      {errorMessage && <p>{errorMessage}</p>}
-      <ul>
-        {displayWebsites.map((website) => (
-          <li key={website.id}>
-            <img src={website.img_logo} alt={`${website.ana_baslik} logo`} />
-            <Link to={`/websites/${website.id}`}>
-              {" "}
-              {/* Update this line */}
-              {website.ana_baslik}
-            </Link>
-            <p>Short URL: {website.kısa_link}</p>
-            <p>Long URL: {website.uzun_link}</p>
-            <p>Baslik: {website.ana_baslik}</p>
-            <p>Aciklama: {website.uzun_aciklama}</p>
-            <p>Meta Etiketleri: {website.meta_etiketleri.join(", ")}</p>
-          </li>
-        ))}
-      </ul>
+    <div className="min-h-screen p-12 ml-36">
+      <div className="w-full max-w-4xl">
+        <h2 className="text-2xl font-bold mb-4">Websites List</h2>
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col md:flex-row gap-4 mb-4"
+        >
+          <input
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            placeholder="Enter URL..."
+            className="flex-1 p-2 border border-gray-300 rounded"
+          />
+          <button
+            type="submit"
+            className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 transition duration-300"
+          >
+            Search
+          </button>
+        </form>
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+        <ul className="space-y-12">
+          {displayWebsites.map((website) => (
+            <li key={website.id} className="flex flex-col md:flex-row gap-4">
+              <img
+                src={website.img_logo}
+                alt={`${website.ana_baslik} logo`}
+                className="w-20 h-20 md:w-24 md:h-24"
+              />
+              <div className="flex-1">
+                <Link
+                  to={`/websites/${website.id}`}
+                  className="text-blue-500 hover:text-blue-700 font-medium"
+                >
+                  {website.ana_baslik}
+                </Link>
+                <p className="text-sm">Short URL: {website.kısa_link}</p>
+                <p className="text-sm">Long URL: {website.uzun_link}</p>
+                <p className="text-sm">Baslik: {website.ana_baslik}</p>
+                <p className="text-sm">Aciklama: {website.uzun_aciklama}</p>
+                <p className="text-sm">
+                  Meta Etiketleri: {website.meta_etiketleri.join(", ")}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

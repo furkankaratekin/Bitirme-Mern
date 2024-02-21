@@ -33,12 +33,18 @@ const WebSitesContent = () => {
   if (error) return <div>Error: {error}</div>; // Hata oluştuğunda hata mesajı göster
 
   return (
-    <div>
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {websiteContent && (
         <>
-          <h1>{websiteContent.ana_baslik}</h1>
-          <p>{websiteContent.uzun_aciklama}</p>
-          <p>{websiteContent.icerik}</p>
+          <h1 className="text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl">
+            {websiteContent.ana_baslik}
+          </h1>
+          <p className="mt-4 text-gray-600 text-lg md:text-xl">
+            {websiteContent.uzun_aciklama}
+          </p>
+          <p className="mt-2 text-gray-600 text-base md:text-lg">
+            {websiteContent.icerik}
+          </p>
           {/* Gerekirse burada daha fazla içerik gösterilebilir */}
         </>
       )}
