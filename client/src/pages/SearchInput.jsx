@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/logoSearch.png";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const SearchInput = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,33 +20,44 @@ const SearchInput = () => {
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
-    setErrorMessage(""); // Reset error message when user starts typing
+    setErrorMessage(""); // Kullanıcı yazmaya başladığında hata mesajını sıfırlıyor
   };
 
   return (
-    <form
-      onSubmit={handleSearch}
-      className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4 p-4 max-w-lg mx-auto mt-10"
-    >
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={handleChange}
-        placeholder="Enter URL..."
-        className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent flex-1"
-      />
-      <button
-        type="submit"
-        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-      >
-        Search
-      </button>
-      {errorMessage && (
-        <p className="text-red-500 text-xs md:text-sm mt-2 md:mt-0">
-          {errorMessage}
-        </p>
-      )}
-    </form>
+    <div className="flex flex-col h-screen">
+      <Header />
+      <div className="flex-grow flex items-center justify-center">
+        <div className="w-full max-w-3xl mx-auto p-4">
+          <div className="flex flex-col items-center">
+            <img src={logo} alt="Logo" className="mb-4 w-3/4 max-w-xs" />{" "}
+            {/* Logo boyutu artırıldı */}
+            <form onSubmit={handleSearch} className="w-full">
+              <div className="flex items-center space-x-4">
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={handleChange}
+                  placeholder="Enter URL..."
+                  className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent flex-grow" // Input genişletildi
+                />
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50" // Buton düzenlendi
+                >
+                  Search
+                </button>
+              </div>
+              {errorMessage && (
+                <p className="text-red-500 text-xs md:text-sm mt-2 text-center">
+                  {errorMessage}
+                </p>
+              )}
+            </form>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </div>
   );
 };
 
