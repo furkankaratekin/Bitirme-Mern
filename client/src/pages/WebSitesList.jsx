@@ -101,9 +101,11 @@ const WebsitesList = () => {
           </form>
         </div>
 
+
+          {/* Tümü Görseller Fİlan Yazısı */}
         <div className="flex justify-center  items-center p-4">
           <div>
-            <Link to="/list">
+            <Link to="/websites">
               <a href="#" className="mr-12 hover:underline hover:text-gray-400">
                 Tümü
               </a>
@@ -127,6 +129,9 @@ const WebsitesList = () => {
         </div>
       </div>
       <hr />
+
+
+      {/* Listelenen yer */}
       <div className="min-h-screen mt-8">
         <div className="w-full max-w-4xl ml-36">
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
