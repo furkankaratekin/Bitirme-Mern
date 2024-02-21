@@ -25,12 +25,14 @@ export default function Header() {
             </a>
           </li>
           <li>
-            <a
-              href="#"
-              className="text-gray-600 hover:text-gray-900 hover:underline"
-            >
-              Videolar
-            </a>
+            <Link to="/videos">
+              <a
+                href="#"
+                className="text-gray-600 hover:text-gray-900 hover:underline"
+              >
+                Videolar
+              </a>
+            </Link>
           </li>
         </ul>
 

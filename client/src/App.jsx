@@ -5,6 +5,7 @@ import WebSitesContent from "./pages/WebSitesContent";
 import SignIn from "./pages/SignIn";
 import SignUp from './pages/SignUp';
 import Profile from "./pages/Profile";
+import VideosList from "./pages/VideosList";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
@@ -21,6 +22,7 @@ function App() {
         <Route path="/websites/:id" element={<WebSitesContent />} />{" "}
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/videos" element={<VideosList />} />
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
         </Route>
