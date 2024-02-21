@@ -26,6 +26,9 @@ const SearchInput = () => {
   return (
     <div className="flex flex-col h-screen">
       <Header />
+
+
+      
       <div className="flex-grow flex items-center justify-center">
         <div className="w-full max-w-3xl mx-auto p-4">
           <div className="flex flex-col items-center">
