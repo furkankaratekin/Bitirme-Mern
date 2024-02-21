@@ -4,8 +4,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import webSitesRoutes from "./routes/webSites.routes.js";
-import authRoutes from './routes/auth.routes.js';
-import userRoutes from './routes/user.routes.js'
+import authRoutes from './routes/auth.route.js';
+import userRoutes from './routes/user.route.js';
 
 dotenv.config();
 
@@ -38,6 +38,7 @@ app.listen(port, () => {
 app.use("/api", webSitesRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
+
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
