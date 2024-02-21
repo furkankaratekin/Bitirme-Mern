@@ -6,6 +6,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from './pages/SignUp';
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -13,7 +14,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 function App() {
   return (
     <Router>
-      <Header></Header>
+      
       <Routes>
         <Route path="/" element={<SearchInput />} />
         <Route path="/websites" element={<WebsitesList />} />
@@ -25,6 +26,7 @@ function App() {
         </Route>
         {/* Add this line */}
       </Routes>
+      
     </Router>
   );
 }
