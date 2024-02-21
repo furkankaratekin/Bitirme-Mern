@@ -6,10 +6,10 @@ import { FaUser } from "react-icons/fa";
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   return (
-    <div className="bg-transparent p-4 sticky top-0 flex justify-between items-center">
+    <div className="bg-white p-0 sticky top-0 flex justify-between items-center">
       <Link to="/">
         {/* Logo */}
-        <img src={KS} alt="Logo" className="h-14 w-14 ml-10" />
+        <img src={KS} alt="Logo" className=" w-14 ml-10" />
       </Link>
 
       {/* Avatar ve Menü */}

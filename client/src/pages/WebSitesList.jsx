@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation, useNavigate, Link } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -72,8 +74,11 @@ const WebsitesList = () => {
   };
 
   return (
-    <div className="min-h-screen p-12 ml-36">
-      <div className="w-full max-w-4xl">
+    <div className="min-h-screen">
+      <div className="mt-4 sticky">
+        <Header></Header>
+      </div>
+      <div className="w-full max-w-4xl ml-36">
         <h2 className="text-2xl font-bold mb-4">Websites List</h2>
         <form
           onSubmit={handleSubmit}
@@ -121,6 +126,7 @@ const WebsitesList = () => {
           ))}
         </ul>
       </div>
+      <Footer></Footer>
     </div>
   );
 };
