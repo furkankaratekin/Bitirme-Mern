@@ -80,25 +80,7 @@ const VideosSearch = () => {
           <Header></Header>
         </div>
         <div className="flex justify-between items-center mt-4 mb-5 px-5 py-3">
-          <div className="w-2/3 mt-4">
-            <form className="flex flex-col md:flex-row gap-4 mb-4 pl-32">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyDown={handleKeyPressVideos}
-                placeholder="Enter URL..."
-                className="flex-1 p-2 border border-gray-300 rounded"
-              />
-              <button
-                type="submit"
-                className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 transition duration-300"
-              >
-                Search
-              </button>
-            </form>
-          </div>
-          <div className="flex-grow">
+          <div className="flex w-2/3 space-x-4 ml-28">
             {/*             <input
               type="text"
               name="name"
@@ -113,9 +95,18 @@ const VideosSearch = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={handleKeyPressVideos}
-              placeholder=""
-              className="w-2/3 mt-3 border border-gray-500 rounded-3xl"
+              placeholder="Search"
+              className=" flex-1 p-2 border border-gray-300 rounded"
             />
+            <button
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onClick={handleKeyPressVideos}
+              type="submit"
+              className=" bg-blue-500 text-white p-2 rounded hover:bg-blue-700 transition duration-300"
+            >
+              Search
+            </button>
           </div>
         </div>
       </div>
