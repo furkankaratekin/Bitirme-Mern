@@ -51,3 +51,40 @@ export const deleteUser = async (req, res, next) => {
     next(error);
   }
 };
+
+//Favoriye Ekleme
+export const addFavorite = async (req,res,next) => {
+  const { userId } = req.params; // Kullanıcı ID'si URL parametresinden alınır
+  const { websiteId } = req.body; // Website ID'si request body'den alınır
+
+    try {
+    const user = await User.findById(userId);
+    if (!user.favorites.includes(websiteId)) {
+      user.favorites.push(websiteId);
+      await user.save();
+      res.status(200).send(user);
+    } else {
+      return next(errorHandler(400, "Website already in favorites."));
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
+//Favoriden Çıkarma
+export const removeFavorite = async (req, res, next) => {
+  const { userId, websiteId } = req.params; // Kullanıcı ve Website ID'leri URL parametrelerinden alınır
+
+  try {
+    const user = await User.findById(userId);
+    user.favorites = user.favorites.filter(
+      (favId) => favId.toString() !== websiteId
+    );
+    await user.save();
+    res.status(200).send(user);
+  } catch (error) {
+    next(error);
+  }
+};

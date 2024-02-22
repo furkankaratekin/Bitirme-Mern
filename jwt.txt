@@ -1,0 +1,7 @@
+Şu anda postman ile sağlandı artık front-end ile sağlanması kaldı
+
+Ayrıca delete ile url "http://localhost:5000/api/user/users/65d70ab78624a45e54502dbc/favorites/65d35673fc1bee5e32eeb18f"
+
+post ile url "http://localhost:5000/api/user/users/65d70ab78624a45e54502dbc/favorites"
+
+Ayrıca postman de denerken aauth ile token girişi de yapmak zorundasın ona göre o şekilde çıktı alabiliyorsun
