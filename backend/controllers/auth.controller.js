@@ -29,10 +29,9 @@ export const signin = async (req, res, next) => {
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-
     const { password: hashedPassword, ...rest } = validUser._doc;
-    const expiryDate = new Date(Date.now() + 3600000); // 1 hour
 
+    const expiryDate = new Date(Date.now() + 3600000); // 1 hour
     // Cookie'ye ekleniyor
     res.cookie("access_token", token, { httpOnly: true, expires: expiryDate });
 
@@ -45,7 +44,6 @@ export const signin = async (req, res, next) => {
     next(error);
   }
 };
-
 
 export const google = async (req, res, next) => {
   try {
