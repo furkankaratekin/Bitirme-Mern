@@ -5,12 +5,16 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoMdHeart } from "react-icons/io";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { current } from "@reduxjs/toolkit";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 
 const WebsitesList = () => {
+  const dispatch = useDispatch();
   const [websites, setWebsites] = useState([]);
   const [displayWebsites, setDisplayWebsites] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -19,6 +23,10 @@ const WebsitesList = () => {
   const location = useLocation();
   const [isHeartFilled, setIsHeartFilled] = useState(false);
   const [favoriteIds, setFavoriteIds] = useState([]);
+  const userIds = useSelector(state => state.user.currentUser._id)
+    const { currentUser, loading, error } = useSelector((state) => state.user);
+
+
 
   useEffect(() => {
     const searchQuery = new URLSearchParams(location.search).get("search");
@@ -78,20 +86,23 @@ const WebsitesList = () => {
   };
 
   //Favorileri değiştirecek olan şey
-const toggleFavorite = async (websiteId, isFavorite) => {
-  const userId = "65d70ab78624a45e54502dbc";
-  const url = `http://localhost:5000/api/user/${userId}/${
-    isFavorite ? "remove-favorite" : "favorites"
-  }`;
+  const toggleFavorite = async (websiteId, isFavorite) => {
+    const userId = currentUser._id;
+    const url = `http://localhost:5000/api/user/${userId}/${
+      isFavorite ? "remove-favorite" : "favorites"
+    }`;
 
-  try {
-    const response = await axios.post(url, {websiteId});
-    console.log('Success:', response.data);
-    // Burada UI'ı güncellemek için gerekli işlemleri yapabilirsiniz.  }
-} catch (error) {
-    console.error('Error:', error.response ? error.response.data : error.message);
-  }
-}
+    try {
+      const response = await axios.post(url, { websiteId });
+      console.log("Success:", response.data);
+      // Burada UI'ı güncellemek için gerekli işlemleri yapabilirsiniz.  }
+    } catch (error) {
+      console.error(
+        "Error:",
+        error.response ? error.response.data : error.message
+      );
+    };
+  };
 
   // const toggleHeart = () => {
   //   setIsHeartFilled(!isHeartFilled)
@@ -101,6 +112,7 @@ const toggleFavorite = async (websiteId, isFavorite) => {
     <div>
       <div className="mt-4">
         <Header></Header>
+        
       </div>
       <div>
         <div className="w-2/3 mt-4">
