@@ -3,6 +3,8 @@ import axios from "axios";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart } from "react-icons/io";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -15,7 +17,8 @@ const WebsitesList = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  
+  const [isHeartFilled, setIsHeartFilled] = useState(false);
+  const [favoriteIds, setFavoriteIds] = useState([]);
 
   useEffect(() => {
     const searchQuery = new URLSearchParams(location.search).get("search");
@@ -74,6 +77,23 @@ const WebsitesList = () => {
     }
   };
 
+  //Favorileri değiştirecek olan şey
+  const toggleHeart = (id) => {
+    setFavoriteIds((currentIds) => {
+      if (currentIds.includes(id)) {
+        // Eğer id zaten favorilerdeyse, çıkar
+        return currentIds.filter((currentId) => currentId !== id);
+      } else {
+        // Eğer id favorilerde değilse, ekle
+        return [...currentIds, id];
+      }
+    });
+  };
+
+  // const toggleHeart = () => {
+  //   setIsHeartFilled(!isHeartFilled)
+  // };
+
   return (
     <div>
       <div className="mt-4">
@@ -101,8 +121,7 @@ const WebsitesList = () => {
           </form>
         </div>
 
-
-          {/* Tümü Görseller Fİlan Yazısı */}
+        {/* Tümü Görseller Fİlan Yazısı */}
         <div className="flex justify-center  items-center p-4">
           <div>
             <Link to="/websites">
@@ -129,7 +148,6 @@ const WebsitesList = () => {
         </div>
       </div>
       <hr />
-
 
       {/* Listelenen yer */}
       <div className="min-h-screen mt-8">
@@ -158,6 +176,13 @@ const WebsitesList = () => {
                   <p className="text-sm">
                     Meta Etiketleri: {website.meta_etiketleri.join(", ")}
                   </p>
+                  <button onClick={() => toggleHeart(website.id)}>
+                    {favoriteIds.includes(website.id) ? (
+                      <IoMdHeart />
+                    ) : (
+                      <IoMdHeartEmpty />
+                    )}
+                  </button>
                 </div>
               </li>
             ))}
@@ -171,9 +196,7 @@ const WebsitesList = () => {
 
 export default WebsitesList;
 
-
-
-  /*       <div className="flex justify-center  items-center p-4">
+/*       <div className="flex justify-center  items-center p-4">
           <div>
             <Link to="/list">
               <a href="#" className="mr-12 hover:underline hover:text-gray-400">
