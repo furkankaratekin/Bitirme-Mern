@@ -78,17 +78,20 @@ const WebsitesList = () => {
   };
 
   //Favorileri değiştirecek olan şey
-  const toggleHeart = (id) => {
-    setFavoriteIds((currentIds) => {
-      if (currentIds.includes(id)) {
-        // Eğer id zaten favorilerdeyse, çıkar
-        return currentIds.filter((currentId) => currentId !== id);
-      } else {
-        // Eğer id favorilerde değilse, ekle
-        return [...currentIds, id];
-      }
-    });
-  };
+const toggleFavorite = async (websiteId, isFavorite) => {
+  const userId = "65d70ab78624a45e54502dbc";
+  const url = `http://localhost:5000/api/user/${userId}/${
+    isFavorite ? "remove-favorite" : "favorites"
+  }`;
+
+  try {
+    const response = await axios.post(url, {websiteId});
+    console.log('Success:', response.data);
+    // Burada UI'ı güncellemek için gerekli işlemleri yapabilirsiniz.  }
+} catch (error) {
+    console.error('Error:', error.response ? error.response.data : error.message);
+  }
+}
 
   // const toggleHeart = () => {
   //   setIsHeartFilled(!isHeartFilled)
@@ -156,7 +159,7 @@ const WebsitesList = () => {
 
           <ul className="space-y-12">
             {displayWebsites.map((website) => (
-              <li key={website.id} className="flex flex-col md:flex-row gap-4">
+              <li key={website._id} className="flex flex-col md:flex-row gap-4">
                 <img
                   src={website.img_logo}
                   alt={`${website.ana_baslik} logo`}
@@ -164,7 +167,7 @@ const WebsitesList = () => {
                 />
                 <div className="flex-1">
                   <Link
-                    to={`/websites/${website.id}`}
+                    to={`/websites/${website._id}`}
                     className="text-blue-500 hover:text-blue-700 font-medium"
                   >
                     {website.ana_baslik}
@@ -176,13 +179,35 @@ const WebsitesList = () => {
                   <p className="text-sm">
                     Meta Etiketleri: {website.meta_etiketleri.join(", ")}
                   </p>
-                  <button onClick={() => toggleHeart(website.id)}>
-                    {favoriteIds.includes(website.id) ? (
+                  <button
+                    onClick={() => {
+                      const isFavorite = favoriteIds.includes(website._id);
+                      toggleFavorite(website._id, isFavorite).then(() => {
+                        // Başarılı işlem sonrası favoriteIds state'ini güncelle
+                        if (isFavorite) {
+                          setFavoriteIds(
+                            favoriteIds.filter((id) => id !== website._id)
+                          );
+                        } else {
+                          setFavoriteIds([...favoriteIds, website._id]);
+                        }
+                      });
+                    }}
+                  >
+                    {favoriteIds.includes(website._id) ? (
                       <IoMdHeart />
                     ) : (
                       <IoMdHeartEmpty />
                     )}
                   </button>
+
+                  {/* <button onClick={() => toggleHeart(website.id)}>
+                    {favoriteIds.includes(website.id) ? (
+                      <IoMdHeart />
+                    ) : (
+                      <IoMdHeartEmpty />
+                    )}
+                  </button> */}
                 </div>
               </li>
             ))}

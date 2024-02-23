@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<SearchInput />} />
         <Route path="/websites" element={<WebsitesList />} />
-        <Route path="/websites/:id" element={<WebSitesContent />} />{" "}
+        <Route path="/websites/:_id" element={<WebSitesContent />} />{" "}
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/videos" element={<VideosList />} />
