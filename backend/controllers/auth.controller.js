@@ -92,3 +92,38 @@ export const google = async (req, res, next) => {
 export const signout = (req, res) => {
   res.clearCookie("access_token").status(200).json("Signout success!");
 };
+
+
+export const signinId = async (req, res, next) => {
+  const { email, password } = req.body;
+  try {
+    // Kullanıcıyı email'e göre ara
+    const validUser = await User.findOne({ email });
+    if (!validUser) {
+      return next(errorHandler(404, "User not found"));
+    }
+
+    // Parolayı doğrula
+    const validPassword = bcryptjs.compareSync(password, validUser.password);
+    if (!validPassword) {
+      return next(errorHandler(401, "Wrong credentials"));
+    }
+
+    // Kullanıcı için bir JWT token oluştur
+    const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    const expiryDate = new Date(Date.now() + 3600000); // 1 saat sonrası için geçerlilik tarihi
+
+    // Cookie'ye token ekleyerek HTTP only olarak ayarla
+    res.cookie("access_token", token, { httpOnly: true, expires: expiryDate });
+
+    // JSON yanıtında token'ı döndür
+    res.status(200).json({
+      id: validUser._id, // Kullanıcının id'sini döndür
+    });
+  } catch (error) {
+    next(error);
+  }
+};

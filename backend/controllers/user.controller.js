@@ -56,7 +56,6 @@ export const deleteUser = async (req, res, next) => {
 export const addFavorite = async (req, res, next) => {
   const { userId } = req.params; // Kullanıcı ID'si URL parametresinden alınır
   const { websiteId } = req.body; // Website ID'si request body'den alınır
-  console.log("test")
 
   
   try {
