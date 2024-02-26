@@ -91,10 +91,27 @@ export const removeFavorite = async (req, res, next) => {
   catch(error){
     next(error)
   }
-
-
-
 };
+
+//Favori Listeleme
+export const listFavorites = async (req, res, next) => {
+  const { userId } = req.params; // Kullanıcı ID'si URL parametresinden alınır
+
+  try {
+    const user = await User.findById(userId);
+    if (user && user.favorites.length > 0) {
+      res.status(200).json(user.favorites);
+    } else {
+      return next(
+        errorHandler(404, "No favorites found or user does not exist.")
+      );
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 
 
 //Favoriden Çıkarma
