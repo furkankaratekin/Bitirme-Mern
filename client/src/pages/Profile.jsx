@@ -17,7 +17,7 @@ import {
   deleteUserFailure,
   signOut,
 } from "../redux/user/userSlice";
-import FavoritesList from "../components/FavoritesList";
+import axios from "axios";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -28,6 +28,7 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const { currentUser, loading, error } = useSelector((state) => state.user);
+  const [listFavorites, setListFavorites] = useState([]);
 
   useEffect(() => {
     if (image) {
@@ -109,18 +110,24 @@ export default function Profile() {
     }
   };
 
-  // currentUser.favorites listesini render eden yeni bir component
-  const FavoritesList = ({ favorites }) => {
-    return (
-      <ul className="list-disc pl-5">
-        {favorites.map((favorite, index) => (
-          <li key={favorite}>
-            Favorite {index + 1}: {favorite}
-          </li>
-        ))}
-      </ul>
-    );
-  };
+  //Favorileri gösterme ID ile
+
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      const userId = currentUser._id
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/user/${userId}/list-favorite`
+        );
+        setListFavorites(response.data);
+      } catch (error) {
+        console.error("Error fetching favorites:", error);
+      }
+    };
+
+    fetchFavorites();
+  }, []);
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -200,12 +207,16 @@ export default function Profile() {
       <p className="text-green-700 mt-5">
         {updateSuccess && "User is updated successfully!"}
       </p>
-      
-      <h2 className="text-2xl font-semibold mt-5 mb-3">Favorites</h2>
-      {/* currentUser.favorites'ı kontrol ederek ve onu FavoritesList'e göndererek render ediyoruz */}
-      {currentUser && currentUser.favorites && (
-        <FavoritesList favorites={currentUser.favorites} />
-      )}
+
+      <div>
+        <h2>Favorite List</h2>
+        <ul>
+          {listFavorites.map((favorite, index) => (
+            // Burada `index` kullanarak her bir elemana benzersiz bir anahtar atıyoruz.
+            <li key={index}>{favorite}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
