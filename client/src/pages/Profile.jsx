@@ -29,7 +29,8 @@ export default function Profile() {
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const [listFavorites, setListFavorites] = useState([]);
-  const [listWebsites, setListWebsites] = useState([])
+  const [listWebsites, setListWebsites] = useState([]);
+  const [filteredWebsites, setFilteredWebsites] = useState([]);
 
   useEffect(() => {
     if (image) {
@@ -112,10 +113,9 @@ export default function Profile() {
   };
 
   //Favorileri gösterme ID ile
-
   useEffect(() => {
     const fetchFavorites = async () => {
-      const userId = currentUser._id
+      const userId = currentUser._id;
       try {
         const response = await axios.get(
           `http://localhost:5000/api/user/${userId}/list-favorite`
@@ -129,18 +129,28 @@ export default function Profile() {
     fetchFavorites();
   }, []);
 
-  //Websiteleri listeleme
+  // Web sitelerini çekme
   useEffect(() => {
     const fetchWebsites = async () => {
-      try{
+      try {
         const response = await axios.get("http://localhost:5000/api/websites");
-        setListWebsites(response.data)
-      }catch(error){
-        console.error("Error fetching websites : " , error);
+        setListWebsites(response.data);
+      } catch (error) {
+        console.error("Error fetching websites:", error);
       }
-    }
+    };
+
     fetchWebsites();
-  })
+  }, [listFavorites]); // listFavorites değiştiğinde bu useEffect tekrar çalışır
+
+  // Favori listesindeki ID'lere göre web sitelerini filtreleme
+  useEffect(() => {
+    const filtered = listWebsites.filter((website) =>
+      listFavorites.includes(website._id)
+    );
+    setFilteredWebsites(filtered);
+  }, [listWebsites, listFavorites]); // listWebsites veya listFavorites değiştiğinde bu useEffect tekrar çalışır
+
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -223,21 +233,27 @@ export default function Profile() {
       </p>
 
       <div>
-        <h2>Favorite List</h2>
-        <ul>
-          {listFavorites.map((favorite, index) => (
-            // Burada `index` kullanarak her bir elemana benzersiz bir anahtar atıyoruz.
-            <li key={index}>{favorite}</li>
-          ))}
-        </ul>
-      </div>
 
       <div>
-        <ul>
-          {listWebsites.map((post) => (
-            <li key={post._id}>{post.ana_baslik}</li>
-          ))}
-        </ul>
+        <h3 className="text-center">Favoriler</h3>
+          <div>
+            
+          </div>
+      </div>
+
+
+
+{/*         <div>
+          <h2>Filtered Websites</h2>
+          <ul>
+            {filteredWebsites.map((website) => (
+              <li key={website._id}>
+                {website.uzun_link}
+                
+                {website.ana_baslik}</li>
+            ))}
+          </ul>
+        </div> */}
       </div>
     </div>
   );
