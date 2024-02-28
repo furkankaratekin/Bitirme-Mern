@@ -29,6 +29,7 @@ export default function Profile() {
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const [listFavorites, setListFavorites] = useState([]);
+  const [listWebsites, setListWebsites] = useState([])
 
   useEffect(() => {
     if (image) {
@@ -128,6 +129,19 @@ export default function Profile() {
     fetchFavorites();
   }, []);
 
+  //Websiteleri listeleme
+  useEffect(() => {
+    const fetchWebsites = async () => {
+      try{
+        const response = await axios.get("http://localhost:5000/api/websites");
+        setListWebsites(response.data)
+      }catch(error){
+        console.error("Error fetching websites : " , error);
+      }
+    }
+    fetchWebsites();
+  })
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -214,6 +228,14 @@ export default function Profile() {
           {listFavorites.map((favorite, index) => (
             // Burada `index` kullanarak her bir elemana benzersiz bir anahtar atıyoruz.
             <li key={index}>{favorite}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <ul>
+          {listWebsites.map((post) => (
+            <li key={post._id}>{post.ana_baslik}</li>
           ))}
         </ul>
       </div>
