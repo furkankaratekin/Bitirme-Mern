@@ -151,7 +151,6 @@ export default function Profile() {
     setFilteredWebsites(filtered);
   }, [listWebsites, listFavorites]); // listWebsites veya listFavorites değiştiğinde bu useEffect tekrar çalışır
 
-
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -233,27 +232,23 @@ export default function Profile() {
       </p>
 
       <div>
+        <div>
+          <h3 className="text-center">Favoriler</h3>
+          <div></div>
+        </div>
 
-      <div>
-        <h3 className="text-center">Favoriler</h3>
-          <div>
-            
-          </div>
-      </div>
-
-
-
-{/*         <div>
+        <div>
           <h2>Filtered Websites</h2>
           <ul>
             {filteredWebsites.map((website) => (
               <li key={website._id}>
                 {website.uzun_link}
-                
-                {website.ana_baslik}</li>
+
+                {website.ana_baslik}
+              </li>
             ))}
           </ul>
-        </div> */}
+        </div>
       </div>
     </div>
   );

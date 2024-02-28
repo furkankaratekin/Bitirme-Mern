@@ -23,10 +23,8 @@ const WebsitesList = () => {
   const location = useLocation();
   const [isHeartFilled, setIsHeartFilled] = useState(false);
   const [favoriteIds, setFavoriteIds] = useState([]);
-  const userIds = useSelector(state => state.user.currentUser._id)
-    const { currentUser, loading, error } = useSelector((state) => state.user);
-
-
+  const userIds = useSelector((state) => state.user.currentUser._id);
+  const { currentUser, loading, error } = useSelector((state) => state.user);
 
   useEffect(() => {
     const searchQuery = new URLSearchParams(location.search).get("search");
@@ -101,7 +99,7 @@ const WebsitesList = () => {
         "Error:",
         error.response ? error.response.data : error.message
       );
-    };
+    }
   };
 
   // const toggleHeart = () => {
@@ -112,7 +110,6 @@ const WebsitesList = () => {
     <div>
       <div className="mt-4">
         <Header></Header>
-        
       </div>
       <div>
         <div className="w-2/3 mt-4">
@@ -172,54 +169,63 @@ const WebsitesList = () => {
           <ul className="space-y-12">
             {displayWebsites.map((website) => (
               <li key={website._id} className="flex flex-col md:flex-row gap-4">
-                <img
-                  src={website.img_logo}
-                  alt={`${website.ana_baslik} logo`}
-                  className="w-20 h-20 md:w-24 md:h-24"
-                />
-                <div className="flex-1">
-                  <Link
-                    to={`/websites/${website._id}`}
-                    className="text-blue-500 hover:text-blue-700 font-medium"
-                  >
-                    {website.ana_baslik}
+                <div className="md:w-10/12 mx-3 ml-60 mt-7 mb-10">
+                  <Link to={`/websites/${website.id}`}>
+                    <div className="flex">
+                      <div className="rounded-full overflow-hidden w-9 h-9 hover:scale-110 transition-transform">
+                        <img
+                          src={website.img_logo}
+                          alt={website.kısa_link}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="ml-3 text-sm hover:underline">
+                        <h4>{website.kısa_link}</h4>
+                        <h5>{website.uzun_link}</h5>
+                      </div>
+                      <div className="ml-auto">
+                        <button
+                          onClick={() => {
+                            const isFavorite = favoriteIds.includes(
+                              website._id
+                            );
+                            toggleFavorite(website._id, isFavorite).then(() => {
+                              // Başarılı işlem sonrası favoriteIds state'ini güncelle
+                              if (isFavorite) {
+                                setFavoriteIds(
+                                  favoriteIds.filter((id) => id !== website._id)
+                                );
+                              } else {
+                                setFavoriteIds([...favoriteIds, website._id]);
+                              }
+                            });
+                          }}
+                        >
+                          {favoriteIds.includes(website._id) ? (
+                            <IoMdHeart />
+                          ) : (
+                            <IoMdHeartEmpty />
+                          )}
+                        </button>
+                      </div>
+                    </div>
                   </Link>
-                  <p className="text-sm">Short URL: {website.kısa_link}</p>
-                  <p className="text-sm">Long URL: {website.uzun_link}</p>
-                  <p className="text-sm">Baslik: {website.ana_baslik}</p>
-                  <p className="text-sm">Aciklama: {website.uzun_aciklama}</p>
-                  <p className="text-sm">
-                    Meta Etiketleri: {website.meta_etiketleri.join(", ")}
-                  </p>
-                  <button
-                    onClick={() => {
-                      const isFavorite = favoriteIds.includes(website._id);
-                      toggleFavorite(website._id, isFavorite).then(() => {
-                        // Başarılı işlem sonrası favoriteIds state'ini güncelle
-                        if (isFavorite) {
-                          setFavoriteIds(
-                            favoriteIds.filter((id) => id !== website._id)
-                          );
-                        } else {
-                          setFavoriteIds([...favoriteIds, website._id]);
-                        }
-                      });
-                    }}
-                  >
-                    {favoriteIds.includes(website._id) ? (
-                      <IoMdHeart />
-                    ) : (
-                      <IoMdHeartEmpty />
-                    )}
-                  </button>
+                  <div className="mt-4">
+                    <Link to={`/websites/${website.id}`}>
+                      <h3 className="text-blue-500 font-bold text-xl hover:underline">
+                        {website.ana_baslik}
+                      </h3>
+                    </Link>
+                    <p className="text-sm mt-2">{website.uzun_aciklama}</p>
 
-                  {/* <button onClick={() => toggleHeart(website.id)}>
-                    {favoriteIds.includes(website.id) ? (
-                      <IoMdHeart />
-                    ) : (
-                      <IoMdHeartEmpty />
-                    )}
-                  </button> */}
+                    <div className="mt-2 text-blue-400">
+                      <Link to={`/websites/${website.id}`}>
+                        <a className="space-x-8" href="">
+                          {website.meta_etiketleri}
+                        </a>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </li>
             ))}
@@ -266,3 +272,46 @@ export default WebsitesList;
       <div className="mt-4 sticky">
         <Header></Header>
       </div> */
+
+/* 
+                        <Link
+                          to={`/websites/${website.id}`}
+                          className="text-blue-500 hover:text-blue-700 font-medium"
+                        >
+                          {website.ana_baslik}
+                        </Link>; */
+/* 
+<button
+  onClick={() => {
+    const isFavorite = favoriteIds.includes(website._id);
+    toggleFavorite(website._id, isFavorite).then(() => {
+      // Başarılı işlem sonrası favoriteIds state'ini güncelle
+      if (isFavorite) {
+        setFavoriteIds(favoriteIds.filter((id) => id !== website._id));
+      } else {
+        setFavoriteIds([...favoriteIds, website._id]);
+      }
+    });
+  }}
+>
+  {favoriteIds.includes(website._id) ? <IoMdHeart /> : <IoMdHeartEmpty />}
+</button>;
+ */
+
+
+
+
+
+
+
+
+
+                  {
+                    /* <button onClick={() => toggleHeart(website.id)}>
+                    {favoriteIds.includes(website.id) ? (
+                      <IoMdHeart />
+                    ) : (
+                      <IoMdHeartEmpty />
+                    )}
+                  </button> */
+                  }
