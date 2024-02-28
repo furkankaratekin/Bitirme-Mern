@@ -170,46 +170,44 @@ const WebsitesList = () => {
             {displayWebsites.map((website) => (
               <li key={website._id} className="flex flex-col md:flex-row gap-4">
                 <div className="md:w-10/12 mx-3 ml-60 mt-7 mb-10">
-                  <Link to={`/websites/${website.id}`}>
-                    <div className="flex">
-                      <div className="rounded-full overflow-hidden w-9 h-9 hover:scale-110 transition-transform">
-                        <img
-                          src={website.img_logo}
-                          alt={website.kısa_link}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
+                  <div className="flex">
+                    <div className="rounded-full overflow-hidden w-9 h-9 hover:scale-110 transition-transform">
+                      <img
+                        src={website.img_logo}
+                        alt={website.kısa_link}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <Link to={`/websites/${website.id}`}>
                       <div className="ml-3 text-sm hover:underline">
                         <h4>{website.kısa_link}</h4>
                         <h5>{website.uzun_link}</h5>
                       </div>
-                      <div className="ml-auto">
-                        <button
-                          onClick={() => {
-                            const isFavorite = favoriteIds.includes(
-                              website._id
-                            );
-                            toggleFavorite(website._id, isFavorite).then(() => {
-                              // Başarılı işlem sonrası favoriteIds state'ini güncelle
-                              if (isFavorite) {
-                                setFavoriteIds(
-                                  favoriteIds.filter((id) => id !== website._id)
-                                );
-                              } else {
-                                setFavoriteIds([...favoriteIds, website._id]);
-                              }
-                            });
-                          }}
-                        >
-                          {favoriteIds.includes(website._id) ? (
-                            <IoMdHeart />
-                          ) : (
-                            <IoMdHeartEmpty />
-                          )}
-                        </button>
-                      </div>
+                    </Link>
+                    <div className="ml-auto">
+                      <button
+                        onClick={() => {
+                          const isFavorite = favoriteIds.includes(website._id);
+                          toggleFavorite(website._id, isFavorite).then(() => {
+                            // Başarılı işlem sonrası favoriteIds state'ini güncelle
+                            if (isFavorite) {
+                              setFavoriteIds(
+                                favoriteIds.filter((id) => id !== website._id)
+                              );
+                            } else {
+                              setFavoriteIds([...favoriteIds, website._id]);
+                            }
+                          });
+                        }}
+                      >
+                        {favoriteIds.includes(website._id) ? (
+                          <IoMdHeart />
+                        ) : (
+                          <IoMdHeartEmpty />
+                        )}
+                      </button>
                     </div>
-                  </Link>
+                  </div>
                   <div className="mt-4">
                     <Link to={`/websites/${website.id}`}>
                       <h3 className="text-blue-500 font-bold text-xl hover:underline">
@@ -298,20 +296,12 @@ export default WebsitesList;
 </button>;
  */
 
-
-
-
-
-
-
-
-
-                  {
-                    /* <button onClick={() => toggleHeart(website.id)}>
+{
+  /* <button onClick={() => toggleHeart(website.id)}>
                     {favoriteIds.includes(website.id) ? (
                       <IoMdHeart />
                     ) : (
                       <IoMdHeartEmpty />
                     )}
                   </button> */
-                  }
+}
