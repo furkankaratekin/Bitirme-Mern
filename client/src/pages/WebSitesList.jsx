@@ -107,134 +107,144 @@ const WebsitesList = () => {
   // };
 
   return (
-    <div>
-      <div className="">
-        <Header></Header>
-      </div>
-      <div>
-        <div className="w-2/3 mt-4">
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col md:flex-row gap-4 mb-4 pl-32"
-          >
-            <input
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="Enter URL..."
-              className="flex-1 p-2 border border-gray-300 rounded"
-            />
-            <button
-              type="submit"
-              className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 transition duration-300"
-            >
-              Search
-            </button>
-          </form>
+    <div className="flex flex-col min-h-screen">
+      <div className="flex-grow">
+        {/* Header Bileşeni */}
+        <div className="">
+          <Header></Header>
         </div>
 
-        {/* Tümü Görseller Fİlan Yazısı */}
-        <div className="flex justify-center  items-center p-4">
-          <div>
-            <Link to="/websites">
-              <a href="#" className="mr-12 hover:underline hover:text-gray-400">
-                Tümü
-              </a>
-            </Link>
-            <Link to="/pictures">
-              <a href="#" className="mr-12 hover:underline hover:text-gray-400">
-                Görseller
-              </a>
-            </Link>
-            <Link to="/videos">
-              <a href="#" className="mr-12 hover:underline hover:text-gray-400">
-                Videolar
-              </a>
-            </Link>
-            <Link to="/maps">
-              <a href="#" className="hover:underline hover:text-gray-400">
-                Haritalar
-              </a>
-            </Link>
+        {/* Ana İçerik Bölümü */}
+        <div className="px-4 md:px-8">
+          {/* Arama Formu */}
+          <div className="w-2/3 mt-4 mx-auto">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col md:flex-row gap-4 mb-4"
+            >
+              <input
+                type="text"
+                value={inputValue}
+                onChange={handleInputChange}
+                placeholder="Arama"
+                // md ekranlar için %75, lg ekranlar için %85 genişlik
+                className="flex-1 p-2 border border-gray-300 rounded"
+              />
+              <button
+                type="submit"
+                className="w-full md:w-auto bg-blue-500 text-white p-2 rounded hover:bg-blue-700 transition duration-300"
+              >
+                Search
+              </button>
+            </form>
+          </div>
+
+          {/* Linkler */}
+          <div className="flex justify-center  items-center p-4">
+            <div>
+              <Link to="/websites">
+                <a
+                  href="#"
+                  className="mr-12 hover:underline hover:text-gray-400"
+                >
+                  Tümü
+                </a>
+              </Link>
+              <Link to="/pictures">
+                <a
+                  href="#"
+                  className="mr-12 hover:underline hover:text-gray-400"
+                >
+                  Görseller
+                </a>
+              </Link>
+              <Link to="/videos">
+                <a
+                  href="#"
+                  className="mr-12 hover:underline hover:text-gray-400"
+                >
+                  Videolar
+                </a>
+              </Link>
+              <Link to="/maps">
+                <a href="#" className="hover:underline hover:text-gray-400">
+                  Haritalar
+                </a>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <hr />
+
+        {/* Listelenen İçerik */}
+        <div className="min-h-screen mt-8">
+          <div className="w-full max-w-6xl mx-auto">
+            {errorMessage && (
+              <p className="text-red-500 text-center">{errorMessage}</p>
+            )}
+
+            <ul className="space-y-12">
+              {displayWebsites.map((website) => (
+                <li
+                  key={website._id}
+                  className="flex flex-col md:flex-row gap-4 items-start"
+                >
+                  <div className="md:flex-1 mx-3">
+                    <div className="flex items-center gap-4">
+                      <div className="rounded-full overflow-hidden w-9 h-9 hover:scale-110 transition-transform">
+                        <img
+                          src={website.img_logo}
+                          alt={website.kısa_link}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <Link to={`/websites/${website.id}`}>
+                        <div className="text-sm hover:underline">
+                          <h4>{website.kısa_link}</h4>
+                          <h5>{website.uzun_link}</h5>
+                        </div>
+                      </Link>
+                      <div className="ml-auto">
+                        <button
+                          onClick={() =>
+                            toggleFavorite(
+                              website._id,
+                              favoriteIds.includes(website._id)
+                            )
+                          }
+                        >
+                          {favoriteIds.includes(website._id) ? (
+                            <IoMdHeart />
+                          ) : (
+                            <IoMdHeartEmpty />
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                    <div className="mt-4">
+                      <Link to={`/websites/${website.id}`}>
+                        <h3 className="text-blue-500 font-bold text-xl hover:underline">
+                          {website.ana_baslik}
+                        </h3>
+                      </Link>
+                      <p className="text-sm mt-2">{website.uzun_aciklama}</p>
+                      <div className="mt-2 text-blue-400">
+                        <Link to={`/websites/${website.id}`}>
+                          <a className="space-x-8" href="#">
+                            {website.meta_etiketleri}
+                          </a>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
-      <hr />
-
-      {/* Listelenen yer */}
-      <div className="min-h-screen mt-8">
-        <div className="w-full max-w-4xl ml-36">
-          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-
-          <ul className="space-y-12">
-            {displayWebsites.map((website) => (
-              <li key={website._id} className="flex flex-col md:flex-row gap-4">
-                <div className="md:w-10/12 mx-3 ml-60 mt-7 mb-10">
-                  <div className="flex">
-                    <div className="rounded-full overflow-hidden w-9 h-9 hover:scale-110 transition-transform">
-                      <img
-                        src={website.img_logo}
-                        alt={website.kısa_link}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <Link to={`/websites/${website.id}`}>
-                      <div className="ml-3 text-sm hover:underline">
-                        <h4>{website.kısa_link}</h4>
-                        <h5>{website.uzun_link}</h5>
-                      </div>
-                    </Link>
-                    <div className="ml-auto">
-                      <button
-                        onClick={() => {
-                          const isFavorite = favoriteIds.includes(website._id);
-                          toggleFavorite(website._id, isFavorite).then(() => {
-                            // Başarılı işlem sonrası favoriteIds state'ini güncelle
-                            if (isFavorite) {
-                              setFavoriteIds(
-                                favoriteIds.filter((id) => id !== website._id)
-                              );
-                            } else {
-                              setFavoriteIds([...favoriteIds, website._id]);
-                            }
-                          });
-                        }}
-                      >
-                        {favoriteIds.includes(website._id) ? (
-                          <IoMdHeart />
-                        ) : (
-                          <IoMdHeartEmpty />
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                  <div className="mt-4">
-                    <Link to={`/websites/${website.id}`}>
-                      <h3 className="text-blue-500 font-bold text-xl hover:underline">
-                        {website.ana_baslik}
-                      </h3>
-                    </Link>
-                    <p className="text-sm mt-2">{website.uzun_aciklama}</p>
-
-                    <div className="mt-2 text-blue-400">
-                      <Link to={`/websites/${website.id}`}>
-                        <a className="space-x-8" href="">
-                          {website.meta_etiketleri}
-                        </a>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <footer>
-          <Footer></Footer>
-        </footer>
-        {/*         <div className="fixed inset-x-0 bottom-0 p-4 ">
-          <Footer></Footer>
-        </div> */}
+      <div>
+        <Footer></Footer>
       </div>
     </div>
   );

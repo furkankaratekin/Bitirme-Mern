@@ -30,6 +30,7 @@ const MapSeatch = () => {
           setSelectedLocation={setSelectedLocation}
         ></GooglePlacesApi>
         <Map selectedLocation={selectedLocation}></Map>
+        
       </div>
     </div>
   );
