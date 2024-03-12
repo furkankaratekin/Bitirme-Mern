@@ -18,6 +18,9 @@ import {
   signOut,
 } from "../redux/user/userSlice";
 import axios from "axios";
+import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
+import KS from '../assets/KS.png';
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -152,102 +155,117 @@ export default function Profile() {
   }, [listWebsites, listFavorites]); // listWebsites veya listFavorites değiştiğinde bu useEffect tekrar çalışır
 
   return (
-    <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
+    <div>
+      <Link to="/">
+        <div className="flex justify-start m-5">
+          <img src={KS} alt="" className="w-14 h-auto" />
+        </div>
+      </Link>
+      <div className="p-3 max-w-lg mx-auto">
+        <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          type="file"
-          ref={fileRef}
-          hidden
-          accept="image/*"
-          onChange={(e) => setImage(e.target.files[0])}
-        />
-        {/* 
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <input
+            type="file"
+            ref={fileRef}
+            hidden
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+          />
+          {/* 
       firebase storage rules:  
       allow read;
       allow write: if
       request.resource.size < 2 * 1024 * 1024 &&
       request.resource.contentType.matches('image/.*') */}
-        <img
-          src={formData.profilePicture || currentUser.profilePicture}
-          alt="profile"
-          className="h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2"
-          onClick={() => fileRef.current.click()}
-        />
-        <p className="text-sm self-center">
-          {imageError ? (
-            <span className="text-red-700">
-              Error uploading image (file size must be less than 2 MB)
-            </span>
-          ) : imagePercent > 0 && imagePercent < 100 ? (
-            <span className="text-slate-700">{`Uploading: ${imagePercent} %`}</span>
-          ) : imagePercent === 100 ? (
-            <span className="text-green-700">Image uploaded successfully</span>
-          ) : (
-            ""
-          )}
-        </p>
-        <input
-          defaultValue={currentUser.username}
-          type="text"
-          id="username"
-          placeholder="Username"
-          className="bg-slate-100 rounded-lg p-3"
-          onChange={handleChange}
-        />
-        <input
-          defaultValue={currentUser.email}
-          type="email"
-          id="email"
-          placeholder="Email"
-          className="bg-slate-100 rounded-lg p-3"
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          id="password"
-          placeholder="Password"
-          className="bg-slate-100 rounded-lg p-3"
-          onChange={handleChange}
-        />
-        <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-          {loading ? "Loading..." : "Update"}
-        </button>
-      </form>
-      <div className="flex justify-between mt-5">
-        <span
-          onClick={handleDeleteAccount}
-          className="text-red-700 cursor-pointer"
-        >
-          Delete Account
-        </span>
-        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">
-          Sign out
-        </span>
-      </div>
-      <p className="text-red-700 mt-5">{error && "Something went wrong!"}</p>
-      <p className="text-green-700 mt-5">
-        {updateSuccess && "User is updated successfully!"}
-      </p>
-
-      <div>
-        <div>
-          <h3 className="text-center">Favoriler</h3>
-          <div></div>
+          <img
+            src={formData.profilePicture || currentUser.profilePicture}
+            alt="profile"
+            className="h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2"
+            onClick={() => fileRef.current.click()}
+          />
+          <p className="text-sm self-center">
+            {imageError ? (
+              <span className="text-red-700">
+                Error uploading image (file size must be less than 2 MB)
+              </span>
+            ) : imagePercent > 0 && imagePercent < 100 ? (
+              <span className="text-slate-700">{`Uploading: ${imagePercent} %`}</span>
+            ) : imagePercent === 100 ? (
+              <span className="text-green-700">
+                Image uploaded successfully
+              </span>
+            ) : (
+              ""
+            )}
+          </p>
+          <input
+            defaultValue={currentUser.username}
+            type="text"
+            id="username"
+            placeholder="Username"
+            className="bg-slate-100 rounded-lg p-3"
+            onChange={handleChange}
+          />
+          <input
+            defaultValue={currentUser.email}
+            type="email"
+            id="email"
+            placeholder="Email"
+            className="bg-slate-100 rounded-lg p-3"
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            className="bg-slate-100 rounded-lg p-3"
+            onChange={handleChange}
+          />
+          <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+            {loading ? "Loading..." : "Update"}
+          </button>
+        </form>
+        <div className="flex justify-between mt-5">
+          <span
+            onClick={handleDeleteAccount}
+            className="text-red-700 cursor-pointer"
+          >
+            Delete Account
+          </span>
+          <span onClick={handleSignOut} className="text-red-700 cursor-pointer">
+            Sign out
+          </span>
         </div>
-
+        <p className="text-red-700 mt-5">{error && "Something went wrong!"}</p>
+        <p className="text-green-700 mt-5">
+          {updateSuccess && "User is updated successfully!"}
+        </p>
+        <hr />
         <div>
-          <h2>Filtered Websites</h2>
-          <ul>
-            {filteredWebsites.map((website) => (
-              <li key={website._id}>
-                {website.uzun_link}
-
-                {website.ana_baslik}
-              </li>
-            ))}
-          </ul>
+          <div className="mt-12">
+            <h2 className="text-center text-2xl text-red-700">Favoriler</h2>
+            <ul>
+              {filteredWebsites.map((website) => (
+                <li key={website._id}>
+                  <div className="grid grid-cols-6 mt-4">
+                    <Link to={`/websites/${website.id}`}>
+                      <img
+                        src={website.img_logo}
+                        alt={website.img_logo}
+                        className="grid-cols-1 rounded-full w-16 h-16 border-2 border-black" // Boyutu küçült ve siyah çerçeve ekle
+                      />
+                    </Link>
+                    <Link to={`/websites/${website.id}`}>
+                      <p className=" ml-5 mt-4 grid-cols-5">
+                        {website.uzun_link}
+                      </p>
+                    </Link>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

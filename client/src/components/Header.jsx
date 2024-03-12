@@ -9,11 +9,11 @@ export default function Header() {
     <div className="bg-white p-0 sticky top-0 flex justify-between items-center">
       <Link to="/">
         {/* Logo */}
-        <img src={KS} alt="Logo" className=" w-14 ml-10" />
+        <img src={KS} alt="Logo" className=" w-14 m-5" />
       </Link>
 
       {/* Avatar ve Menü */}
-      <div className="flex items-center space-x-8 ">
+      <div className="flex items-center space-x-6 mr-5 ">
         {/* Menü */}
         <ul className="hidden md:flex space-x-4">
           <li>
