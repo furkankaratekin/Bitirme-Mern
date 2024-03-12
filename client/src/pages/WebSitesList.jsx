@@ -229,7 +229,12 @@ const WebsitesList = () => {
             ))}
           </ul>
         </div>
-        <Footer></Footer>
+        <footer>
+          <Footer></Footer>
+        </footer>
+        {/*         <div className="fixed inset-x-0 bottom-0 p-4 ">
+          <Footer></Footer>
+        </div> */}
       </div>
     </div>
   );
