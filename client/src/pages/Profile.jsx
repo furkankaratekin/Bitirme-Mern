@@ -22,6 +22,7 @@ import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import KS from '../assets/KS.png';
 
+
 export default function Profile() {
   const dispatch = useDispatch();
   const fileRef = useRef(null);
@@ -268,6 +269,9 @@ export default function Profile() {
           </div>
         </div>
       </div>
+      <footer>
+        <Footer></Footer>
+      </footer>
     </div>
   );
 }
