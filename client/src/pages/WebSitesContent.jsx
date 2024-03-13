@@ -7,6 +7,8 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { IoMdHeart } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from 'react-toastify'; // react-toastify importları
+import 'react-toastify/dist/ReactToastify.css'; // react-toastify CSS
 
 const WebSitesContent = () => {
   const { id } = useParams(); // URL'den 'id' parametresini al
@@ -42,7 +44,7 @@ const WebSitesContent = () => {
 
   if (error) return <div>Error: {error}</div>; // Hata oluştuğunda hata mesajı göster
 
-  //Favorileri değiştirecek olan şey
+  // Favori ekleme/çıkarma işlemi
   const toggleFavorite = async (websiteId, isFavorite) => {
     const userId = currentUser._id;
     const url = `http://localhost:5000/api/user/${userId}/${
@@ -51,9 +53,15 @@ const WebSitesContent = () => {
 
     try {
       const response = await axios.post(url, { websiteId });
-      console.log("Success:", response.data);
-      // Burada UI'ı güncellemek için gerekli işlemleri yapabilirsiniz.  }
+      if (isFavorite) {
+        toast.success("Favorilerden çıkarıldı!");
+        setFavoriteIds(favoriteIds.filter((id) => id !== websiteId));
+      } else {
+        toast.success("Favorilere eklendi!");
+        setFavoriteIds([...favoriteIds, websiteId]);
+      }
     } catch (error) {
+      toast.error("İşlem başarısız oldu.");
       console.error(
         "Error:",
         error.response ? error.response.data : error.message
@@ -64,6 +72,8 @@ const WebSitesContent = () => {
   return (
     <div>
       <Header></Header>
+      <ToastContainer />
+
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {websiteContent && (
           <>
