@@ -3,11 +3,11 @@ import axios from "axios";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { IoMdHeartEmpty } from "react-icons/io";
-import { IoMdHeart } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { current } from "@reduxjs/toolkit";
+/* import { IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart } from "react-icons/io"; */
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -84,7 +84,7 @@ const WebsitesList = () => {
   };
 
   //Favorileri değiştirecek olan şey
-  const toggleFavorite = async (websiteId, isFavorite) => {
+/*   const toggleFavorite = async (websiteId, isFavorite) => {
     const userId = currentUser._id;
     const url = `http://localhost:5000/api/user/${userId}/${
       isFavorite ? "remove-favorite" : "favorites"
@@ -100,7 +100,7 @@ const WebsitesList = () => {
         error.response ? error.response.data : error.message
       );
     }
-  };
+  }; */
 
   // const toggleHeart = () => {
   //   setIsHeartFilled(!isHeartFilled)
@@ -204,7 +204,7 @@ const WebsitesList = () => {
                           <h5>{website.uzun_link}</h5>
                         </div>
                       </Link>
-                      <div className="ml-auto">
+                      {/* <div className="ml-auto">
                         <button
                           onClick={() =>
                             toggleFavorite(
@@ -219,7 +219,7 @@ const WebsitesList = () => {
                             <IoMdHeartEmpty />
                           )}
                         </button>
-                      </div>
+                      </div> */}
                     </div>
                     <div className="mt-4">
                       <Link to={`/websites/${website.id}`}>
