@@ -23,8 +23,8 @@ const WebsitesList = () => {
   const location = useLocation();
   const [isHeartFilled, setIsHeartFilled] = useState(false);
   const [favoriteIds, setFavoriteIds] = useState([]);
-  const userIds = useSelector((state) => state.user.currentUser._id);
-  const { currentUser, loading, error } = useSelector((state) => state.user);
+/*   const userIds = useSelector((state) => state.currentUser.id);
+ */  /* const { currentUser, loading, error } = useSelector((state) => state.user); */
 
   useEffect(() => {
     const searchQuery = new URLSearchParams(location.search).get("search");

@@ -17,8 +17,8 @@ const WebSitesContent = () => {
   const [error, setError] = useState("");
   const [isHeartFilled, setIsHeartFilled] = useState(false);
   const [favoriteIds, setFavoriteIds] = useState([]);
-  const userIds = useSelector((state) => state.user.currentUser._id);
-  const { currentUser } = useSelector((state) => state.user);
+/*   const userIds = useSelector((state) => state.user.currentUser._id);*/
+  const { currentUser } = useSelector((state) => state.user); 
 
   useEffect(() => {
     const fetchWebsiteContent = async () => {
