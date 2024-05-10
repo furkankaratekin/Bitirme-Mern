@@ -78,12 +78,7 @@ const PictureList = () => {
                   Videolar
                 </a>
               </Link>
-              <Link to="/maps">
-                <a href="#" className="hover:underline hover:text-gray-400">
-                  Haritalar
-                </a>
-              </Link>
-            </div>
+             </div>
           </div>
         </div>
         <hr />

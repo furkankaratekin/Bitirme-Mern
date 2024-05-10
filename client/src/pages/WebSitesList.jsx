@@ -84,7 +84,7 @@ const WebsitesList = () => {
   };
 
   //Favorileri değiştirecek olan şey
-/*   const toggleFavorite = async (websiteId, isFavorite) => {
+  /*   const toggleFavorite = async (websiteId, isFavorite) => {
     const userId = currentUser._id;
     const url = `http://localhost:5000/api/user/${userId}/${
       isFavorite ? "remove-favorite" : "favorites"
@@ -164,11 +164,6 @@ const WebsitesList = () => {
                   className="mr-12 hover:underline hover:text-gray-400"
                 >
                   Videolar
-                </a>
-              </Link>
-              <Link to="/maps">
-                <a href="#" className="hover:underline hover:text-gray-400">
-                  Haritalar
                 </a>
               </Link>
             </div>

@@ -131,12 +131,7 @@ const VideosSearch = () => {
                 Videolar
               </a>
             </Link>
-            <Link to="/maps">
-              <a href="#" className="hover:underline hover:text-gray-400">
-                Haritalar
-              </a>
-            </Link>
-          </div>
+           </div>
         </div>
         <hr className="" />
         <p className="text-sm">
